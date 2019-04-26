@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:41:51 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/26 21:45:00 by onahiz           ###   ########.fr       */
+/*   Updated: 2019/04/25 03:18:13 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	*expand_str(t_param *arg, char *s, int len, char c)
 		if (sign)
 			tmp[0] = '-';
 	}
+	ft_memdel((void **)&s);
 	tmp[i] = 0;
 	return (tmp);
 }
@@ -67,18 +68,18 @@ char		*handle_hash(t_param *a, char *s, int len)
 		{
 			if (ft_strchr("oO", a->f))
 				i--;
-			else if (i > 1)
-				i -= 2;
 			else
-				i--;
+				i -= (i > 1 ? 2 : 1);
 		}
 		s = trim_arg(s, a, len);
 		tmp = ft_strjoin(get_prefix(a->f), s + i);
 		ft_strcpy(s + i, tmp);
-		free(tmp);
+		ft_memdel((void **)&tmp);
 	}
 	if (a->f == 'p' && !*s)
-		return (ft_strdup("0x"));
+	{
+		AND(ft_memdel((void **)&s), ft_strdup("0x"));
+	}
 	return (s);
 }
 
@@ -89,6 +90,7 @@ char		*handle_plus_space(t_param *arg, char *s, int len)
 	char	*tmp;
 
 	c = get_sign(arg);
+	tmp = s;
 	if (ft_strchr("diD", arg->f) && !ft_strchr(s, '-') &&
 		(arg->plus || arg->space))
 	{
@@ -99,15 +101,16 @@ char		*handle_plus_space(t_param *arg, char *s, int len)
 		tmp[i] = c;
 		ft_strcpy(tmp + i + 1, s + i);
 		tmp = trim_arg2(arg, tmp, c, len);
-		s = tmp;
+		ft_memdel((void **)&s);
 	}
-	return (s);
+	return (tmp);
 }
 
 char		*handle_precision(t_param *arg, char *s, int len)
 {
 	char	*tmp;
 
+	tmp = s;
 	if (arg->precision >= 0 && !arg->null)
 	{
 		if (ft_strchr("dDiuUoOxXp", arg->f) && ft_strchr(s, '-'))
@@ -122,13 +125,10 @@ char		*handle_precision(t_param *arg, char *s, int len)
 			tmp = ft_memset(ft_strnew(arg->precision + 1), 48, arg->precision);
 			if (*s != '-')
 				ft_strcpy((tmp + arg->precision - len), s);
-			else
-			{
-				*tmp = '-';
+			else if ((*tmp = '-'))
 				ft_strcpy((tmp + arg->precision - len + 1), s + 1);
-			}
-			s = tmp;
+			ft_memdel((void **)&s);
 		}
 	}
-	return (s);
+	return (tmp);
 }

@@ -6,13 +6,13 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 03:53:42 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/26 21:44:26 by onahiz           ###   ########.fr       */
+/*   Updated: 2019/04/26 02:37:13 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "handle.h"
 
-int			direct_print(char *f, int *i)
+int			direct_print(char *f, int *i, t_buff *b)
 {
 	int		j;
 
@@ -20,7 +20,7 @@ int			direct_print(char *f, int *i)
 	*i = get_next_spec(f);
 	if (*i == j)
 	{
-		write(1, f, j);
+		write(b->fd, f, j);
 		return (j);
 	}
 	return (0);

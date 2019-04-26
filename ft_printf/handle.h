@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:46:08 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/26 21:52:31 by onahiz           ###   ########.fr       */
+/*   Updated: 2019/04/26 02:37:28 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <locale.h>
 # include "lib.h"
+# define AND(x, y) x; return (y)
 
 typedef	struct		s_param
 {
@@ -41,6 +42,7 @@ typedef struct		s_buff
 {
 	char			*buff;
 	int				i;
+	int				fd;
 	int				ret;
 }					t_buff;
 
@@ -48,7 +50,7 @@ int					is_fspec(char f);
 int					is_flag(char f);
 int					count_ac(char *f);
 int					get_next_spec(char *f);
-int					direct_print(char *f, int *i);
+int					direct_print(char *f, int *i, t_buff *b);
 int					ft_putbuff(t_buff *b, int ret);
 int					is_negative(t_param *arg, char **s, int *len);
 int					buff_cpy(char *f, int pos, va_list ap, t_buff *b);

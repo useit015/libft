@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 03:37:18 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/26 22:06:26 by onahiz           ###   ########.fr       */
+/*   Updated: 2019/04/24 05:47:46 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int					ft_isblank(int c);
 int					ft_isspace(int c);
 int					ft_isxdigit(int c);
 int					ft_atoi(const char *str);
+int					ft_intlen(long long int n);
+int					ft_intlen_base(long long int n, int base);
 int					ft_str_is_alpha(const char *str);
 int					ft_printf(const char *format, ...);
 int					ft_str_is_numeric(const char *str);
@@ -75,6 +77,7 @@ char				*ft_strtrim(char const *s);
 char				*ft_strlowcase(char *str);
 char				*ft_strupcase(char *str);
 char				*ft_strnew(size_t size);
+char				*ft_trim(char *s);
 char				*ft_itoa(int n);
 void				ft_putnbr(int nb);
 void				ft_putchar(char c);
@@ -84,6 +87,7 @@ void				ft_strdel(char **as);
 void				ft_putstr(char const *s);
 void				*ft_memalloc(size_t size);
 void				ft_putendl(char const *s);
+void				ft_swap(void **a, void **b);
 void				ft_putnbr_fd(int nb, int fd);
 void				ft_putchar_fd(char c, int fd);
 void				*ft_bzero(void *s, size_t len);

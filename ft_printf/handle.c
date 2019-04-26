@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 05:52:37 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/26 21:44:47 by onahiz           ###   ########.fr       */
+/*   Updated: 2019/04/26 02:36:50 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	display(char *s, int nu, char *cut, t_buff *b)
 	char	*tmp;
 
 	i = -1;
-	write(1, b->buff, b->i);
+	write(b->fd, b->buff, b->i);
 	b->ret += b->i;
 	b->i = 0;
 	if (nu)
@@ -29,13 +29,14 @@ static void	display(char *s, int nu, char *cut, t_buff *b)
 			;
 		s[i] = 0;
 	}
-	else
+	else if ((tmp = s) || 1)
 	{
-		tmp = s;
 		s = ft_strjoin(cut, s);
 		len = ft_strlen(s);
+		ft_memdel((void **)&tmp);
 	}
-	write(1, s, len);
+	write(b->fd, s, len);
+	ft_memdel((void **)&s);
 	b->ret += len;
 	ft_memset(b->buff, 0, BUFF_SIZE);
 }
@@ -44,7 +45,7 @@ static int	buff_is_null(char *s)
 {
 	while (*s)
 	{
-		if (*s != 48 && *s != ' ')
+		if (*s != 48 && *s != 32)
 			return (0);
 		s++;
 	}
@@ -76,17 +77,16 @@ int			handler(char *f, va_list ap, char *cut, t_buff *b)
 	f = skip_flags(f);
 	if (*f)
 	{
-		if (is_fspec(*f))
-			s = convert_arg(f, ap, &arg, get_base(*f));
-		else
-			s = new_fspec(&arg, *f);
+		s = is_fspec(*f) ? convert_arg(f, ap, &arg, get_base(*f))
+							: new_fspec(&arg, *f);
 		if (arg.err)
-			return (0);
+		{
+			AND(ft_memdel((void **)&s), 0);
+		}
 		format(s, &arg, cut, b);
 		if ((i = get_next_spec(++f)) > BUFF_SIZE - b->i)
 		{
-			write(1, f, i);
-			return (handler(f + i + 1, ap, "", b));
+			AND(write(b->fd, f, i), handler(f + i + 1, ap, "", b));
 		}
 		if (buff_cpy(f, i, ap, b) == 0)
 			return (0);

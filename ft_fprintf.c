@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_fprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2019/04/26 02:37:47 by onahiz           ###   ########.fr       */
+/*   Created: 2019/04/26 02:31:44 by onahiz            #+#    #+#             */
+/*   Updated: 2019/04/26 02:37:54 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf/handle.h"
 
-int			ft_printf(const char *format, ...)
+int			ft_fprintf(int fd, const char *format, ...)
 {
 	int		i;
 	int		j;
@@ -20,7 +20,7 @@ int			ft_printf(const char *format, ...)
 	va_list	ap;
 	t_buff	b;
 
-	b.fd = 1;
+	b.fd = fd;
 	b.ret = 0;
 	if (!format || !*format)
 		return (0);

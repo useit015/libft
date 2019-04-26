@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/06 03:49:33 by onahiz            #+#    #+#             */
-/*   Updated: 2019/04/16 03:41:21 by onahiz           ###   ########.fr       */
+/*   Created: 2019/04/24 05:16:43 by onahiz            #+#    #+#             */
+/*   Updated: 2019/04/24 05:17:11 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+int		ft_intlen(long long int n)
 {
-	size_t			i;
-	unsigned char	*cdst;
-	unsigned char	*csrc;
-
-	if (!dst || !src)
-		return (NULL);
-	i = 0;
-	cdst = (unsigned char *)dst;
-	csrc = (unsigned char *)src;
-	while (i < n)
-	{
-		cdst[i] = csrc[i];
-		i++;
-	}
-	return (dst);
+	return (ft_intlen_base(n, 10));
 }
